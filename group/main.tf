@@ -1,3 +1,14 @@
+terraform {
+  required_providers {
+    okta = {
+      source = "oktadeveloper/okta"
+      version = "~> 3.6"
+    }
+  }
+}
+
+provider "okta" {}
+
 resource "okta_user_type" "hero" {
     name         = "Hero"
     display_name = "Hero"
