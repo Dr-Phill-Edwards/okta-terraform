@@ -12,8 +12,8 @@ provider "okta" {}
 resource "okta_app_oauth"  "example" {
   label          = "example"
   type           = "web"
-  response_types = ["token"]
-  grant_types    = ["authorization_code"]
+  response_types = ["token","code"]
+  grant_types    = ["authorization_code","implicit"]
   redirect_uris  = ["http://localhost:8080"]
   consent_method = "REQUIRED"
 }
@@ -21,4 +21,9 @@ resource "okta_app_oauth"  "example" {
 output "client_id" {
     description  = "Client Identifier"
     value        = okta_app_oauth.example.client_id
+}
+
+output "client_secret" {
+    description  = "Client Secret"
+    value        = okta_app_oauth.example.client_secret
 }

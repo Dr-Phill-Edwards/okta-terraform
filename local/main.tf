@@ -11,8 +11,18 @@ variable "client_id" {
     type  = string
 }
 
+variable "client_secret" {
+    type  = string
+}
+
 resource "local_file" "cid" {
     content     = var.client_id
     filename = "${path.module}/cid.txt"
+    file_permission = "0600"
+}
+
+resource "local_file" "csecret" {
+    content     = var.client_secret
+    filename = "${path.module}/csecret.txt"
     file_permission = "0600"
 }
