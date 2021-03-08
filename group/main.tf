@@ -9,32 +9,56 @@ terraform {
 
 provider "okta" {}
 
-resource "okta_user_type" "hero" {
-    name         = "Hero"
-    display_name = "Hero"
-    description  = "Marvel Hero"
+variable "alice_password" {
+    type  = string
 }
 
-resource "okta_user_schema" "hero" {
+variable "bob_password" {
+    type  = string
+}
+
+resource "okta_user_type" "employee" {
+    name         = "Employee"
+    display_name = "Employee"
+    description  = "Company Employee"
+}
+
+resource "okta_user_type" "administrator" {
+    name         = "Administrator"
+    display_name = "Administrator"
+    description  = "System Administrator"
+}
+
+resource "okta_user_schema" "employee" {
     index       = "shirtSize"
     title       = "shirtSize"
     description = "Shirt Size"
     type        = "string"
     master      = "OKTA"
     enum        = ["S", "M", "L", "XL"]
-    user_type   = okta_user_type.hero.id
+    user_type   = okta_user_type.employee.id
 }
 
-resource "okta_user" "superman" {
-    first_name  = "Clark"
-    last_name   = "Kent"
-    login       = "clark.kent@example.com"
-    email       = "clark.kent@example.com"
+resource "okta_user" "alice" {
+    first_name  = "Alice"
+    last_name   = "Sure"
+    login       = "alice.sure@example.com"
+    email       = "alice.sure@example.com"
+    password    = var.alice_password
     user_type   = "Hero"
 }
 
-resource "okta_group" "example" {
-    name        = "Example"
-    description = "Example group"
-    users       = [okta_user.superman.id]
+resource "okta_user" "bob" {
+    first_name  = "Bob"
+    last_name   = "Swift"
+    login       = "bob.swift@example.com"
+    email       = "bob.swift@example.com"
+    password    = var.bob_password
+    user_type   = "Employee"
+}
+
+resource "okta_group" "crypto" {
+    name        = "Crypto"
+    description = "Crypto Group"
+    users       = [okta_user.alice.id,okta_user.bob.id]
 }
