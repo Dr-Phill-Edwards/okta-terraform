@@ -2,4 +2,5 @@
 terraform*
 local/*.txt
 run
+._*
 

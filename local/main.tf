@@ -15,6 +15,10 @@ variable "client_secret" {
     type  = string
 }
 
+variable "api_token" {
+    type  = string
+}
+
 resource "local_file" "cid" {
     content     = var.client_id
     filename = "${path.module}/cid.txt"

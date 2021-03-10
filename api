@@ -1,0 +1,17 @@
+#! /bin/bash
+
+auth="Authorization: SSWS $OKTA_API_TOKEN"
+uri="https://$OKTA_DOMAIN/api/v1"
+
+me=/users/me
+alice=/users/alice.sure@example.com
+alice_type=/meta/types/user/oty6yh53LQAi5zxgO5d5
+alice_schema=/meta/schemas/user/osc6yh53LQAi5zxgO5d5
+bob=/users/bob.swift@example.com
+bob_type=/meta/types/user/oty6yh53LQAi5zxgO5d5
+bob_schema=/meta/schemas/user/osc6yh53LQAi5zxgO5d5
+curl -i \
+     -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     -H "$auth" \
+     $uri$bob

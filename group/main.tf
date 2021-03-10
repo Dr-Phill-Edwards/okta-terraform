@@ -45,7 +45,7 @@ resource "okta_user" "alice" {
     login       = "alice.sure@example.com"
     email       = "alice.sure@example.com"
     password    = var.alice_password
-    user_type   = "Hero"
+    user_type   = "Administrator"
 }
 
 resource "okta_user" "bob" {
