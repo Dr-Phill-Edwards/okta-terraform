@@ -11,7 +11,9 @@ def index():
 
 @app.route('/control.js', methods=['GET'])
 def control():
-    return render_template('control.js', okta_domain=os.environ['OKTA_DOMAIN'], okta_client_id=os.environ['OKTA_CLIENT_ID'], okta_issuer_uri=os.environ['OKTA_ISSUER_URI'])
+    return render_template('control.js', okta_domain=os.environ['OKTA_DOMAIN'],
+                           okta_client_id=os.environ['OKTA_CLIENT_ID'],
+                           okta_api_token=os.environ['OKTA_API_TOKEN'])
 
 @app.route('/<path:file>', methods=['GET'])
 def serve_static(file):

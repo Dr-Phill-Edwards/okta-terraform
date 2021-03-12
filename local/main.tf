@@ -1,11 +1,12 @@
 terraform {
   required_providers {
-    local = {
-      source = "local"
-      version = "~> 2.1"
+    docker = {
+      source = "terraform-providers/docker"
     }
   }
 }
+
+provider "docker" {}
 
 variable "client_id" {
     type  = string
@@ -19,14 +20,20 @@ variable "api_token" {
     type  = string
 }
 
-resource "local_file" "cid" {
-    content     = var.client_id
-    filename = "${path.module}/cid.txt"
-    file_permission = "0600"
+variable "domain" {
+    type  = string
 }
 
-resource "local_file" "csecret" {
-    content     = var.client_secret
-    filename = "${path.module}/csecret.txt"
-    file_permission = "0600"
+resource "docker_container" "okta" {
+  image = "okta:latest"
+  name  = "okta"
+  ports {
+    internal = 8080
+    external = 8080
+  }
+  env = [
+    "OKTA_DOMAIN=${var.domain}",
+    "OKTA_CLIENT_ID=${var.client_id}",
+    "OKTA_API_TOKEN=${var.api_token}"
+  ]
 }

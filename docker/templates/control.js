@@ -1,11 +1,9 @@
-var accessToken = null;
-
 var signIn = new OktaSignIn({
-    baseUrl: '{{okta_domain}}',
+    baseUrl: 'http://{{okta_domain}}',
     clientId: '{{okta_client_id}}',
     redirectUri: window.location.origin,
     authParams: {
-        issuer: '{{okta_issuer_uri}}',
+        issuer: 'https://{{okta_domain}}/oauth2/default',
         responseType: ['token', 'id_token']
     }
 });
@@ -16,7 +14,6 @@ signIn.renderEl({
     if (res.status === 'SUCCESS') {
         accessToken = res.tokens.accessToken.accessToken;
         signIn.hide();
-        loaddetails()
     } else {
         alert('fail);')
     }
@@ -28,7 +25,7 @@ function loaddetails() {
     const url = "https://{{okta_domain}}/api/v1";
     var headers = {
         'Accept': 'application/json',
-        'Authorization': 'SSWS {{api_token}}',
+        'Authorization': 'SSWS {{okta_api_token}}',
         'Content-Type': 'application/json'
     }
 

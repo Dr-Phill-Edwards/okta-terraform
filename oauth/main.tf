@@ -11,11 +11,17 @@ provider "okta" {}
 
 resource "okta_app_oauth"  "example" {
   label          = "example"
-  type           = "web"
-  response_types = ["token","code"]
-  grant_types    = ["authorization_code","implicit"]
-  redirect_uris  = ["http://localhost:8080"]
+  type           = "browser"
+  response_types = ["code"]
+  grant_types    = ["authorization_code"]
+  redirect_uris  = ["http://localhost:8080", "http://localhost:8080/login/callback"]
+  login_uri      = "http://localhost:8080"
   consent_method = "REQUIRED"
+}
+
+output "app_id" {
+    description  = "Application Identifier"
+    value        = okta_app_oauth.example.id
 }
 
 output "client_id" {

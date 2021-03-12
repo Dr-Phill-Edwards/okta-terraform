@@ -17,6 +17,10 @@ variable "bob_password" {
     type  = string
 }
 
+variable "app_id" {
+    type  = string
+}
+
 resource "okta_user_type" "employee" {
     name         = "Employee"
     display_name = "Employee"
@@ -55,6 +59,18 @@ resource "okta_user" "bob" {
     email       = "bob.swift@example.com"
     password    = var.bob_password
     user_type   = "Employee"
+}
+
+resource "okta_app_user" "alice" {
+  app_id   = var.app_id
+  user_id  = okta_user.alice.id
+  username = "alice"
+}
+
+resource "okta_app_user" "bob" {
+  app_id   = var.app_id
+  user_id  = okta_user.bob.id
+  username = "bob"
 }
 
 resource "okta_group" "crypto" {
